@@ -18,7 +18,7 @@ RUN export DEBIAN_FRONTEND=noninteractive && \
   apt install -y ./cuda-repo-ubuntu2204-11-8-local_11.8.0-520.61.05-1_amd64.deb && \
   cp /var/cuda-repo-ubuntu2204-11-8-local/cuda-*-keyring.gpg /usr/share/keyrings/ && \
   apt update && \
-  apt -y install cuda
+  apt-get -y install -qq cuda
 
 RUN curl https://pyenv.run | PYENV_ROOT=/opt/pyenv bash
 
