@@ -11,7 +11,8 @@ RUN apt install -y --no-install-recommends ca-certificates git curl \
   libncursesw5-dev xz-utils tk-dev libxml2-dev libxmlsec1-dev libffi-dev liblzma-dev aria2
 
 # Install cuda
-RUN wget https://developer.download.nvidia.com/compute/cuda/repos/ubuntu2204/x86_64/cuda-ubuntu2204.pin && \
+RUN export DEBIAN_FRONTEND=noninteractive && \
+  wget https://developer.download.nvidia.com/compute/cuda/repos/ubuntu2204/x86_64/cuda-ubuntu2204.pin && \
   mv cuda-ubuntu2204.pin /etc/apt/preferences.d/cuda-repository-pin-600 && \
   wget https://developer.download.nvidia.com/compute/cuda/11.8.0/local_installers/cuda-repo-ubuntu2204-11-8-local_11.8.0-520.61.05-1_amd64.deb && \
   apt install -y ./cuda-repo-ubuntu2204-11-8-local_11.8.0-520.61.05-1_amd64.deb && \
