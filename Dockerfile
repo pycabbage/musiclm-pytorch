@@ -31,6 +31,8 @@ SHELL [ "/opt/with-pyenv.sh" ]
 RUN --mount=source=scripts.d/40-install-python.sh,target=/src/scripts.d/40-install-python.sh \
   /src/scripts.d/40-install-python.sh
 
+COPY --chown=${NEW_USERNAME}:${NEW_USERNAME} . /src
+
 RUN --mount=source=scripts.d/50-install-pytorch.sh,target=/src/scripts.d/50-install-pytorch.sh \
   --mount=source=setup.py,target=/src/setup.py \
   --mount=source=LICENSE,target=/src/LICENSE \
