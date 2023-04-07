@@ -21,7 +21,30 @@ jobs:
         registry: ghcr.io
         username: ${{ github.actor }}
         password: ${{ secrets.GITHUB_TOKEN }}
+
+    - uses: docker/metadata-action@v4
+      id: meta
+      with:
+        # list of Docker images to use as base name for tags
+        images: |
+          ${{ github.repository }}/musiclm
+          ghcr.io/${{ github.repository }}/musiclm
+        # generate Docker tags based on the following events/attributes
+        tags: |
+          type=ref,event=branch
+          type=sha
+          type=raw,value=latest,enable={{is_default_branch}}
+
     - uses: docker/build-push-action@v4
       with:
+        tags: ${{ steps.meta.outputs.tags }}
+        labels: ${{ steps.meta.outputs.labels }}
         context: .
         push: false
+        pull: false
+        cache-from: type=gha
+        cache-to: type=gha,mode=max
+        build-args: |
+          BUILDTIME=${{ fromJSON(steps.meta.outputs.json).labels['org.opencontainers.image.created'] }}
+          VERSION=${{ fromJSON(steps.meta.outputs.json).labels['org.opencontainers.image.version'] }}
+          REVISION=${{ fromJSON(steps.meta.outputs.json).labels['org.opencontainers.image.revision'] }}
