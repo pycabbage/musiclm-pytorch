@@ -10,6 +10,13 @@ Please join <a href="https://discord.gg/xBPBXfcFHd"><img alt="Join us on Discord
 
 <a href="https://www.youtube.com/watch?v=jTrYIGxOuKQ">What's AI by Louis Bouchard</a>
 
+## Building
+
+```bash
+docker build . --progress=plain -t musiclm:1
+docker run -it --rm musiclm:1 /bin/bash
+```
+
 ## Appreciation
 
 - <a href="https://stability.ai/">Stability.ai</a> for the generous sponsorship to work and open source cutting edge artificial intelligence research
