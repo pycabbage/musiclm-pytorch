@@ -31,4 +31,4 @@ RUN pyenv install ${PYTHON_VERSION:-3.6.15}
 RUN pyenv global ${PYTHON_VERSION:-3.6.15}
 RUN python3 -V
 RUN python3 -m pip install -U pip
-RUN pip3 install torch torchvision torchaudio --index-url https://download.pytorch.org/whl/cu118
+RUN pip3 install torch==1.12.0+cu116 --index-url https://download.pytorch.org/whl/cu118
