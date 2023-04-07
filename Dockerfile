@@ -2,7 +2,7 @@ FROM ubuntu:22.04
 ENV DEBIAN_FRONTEND noninteractive
 ENV NEW_USERNAME musiclm
 ENV PYENV_ROOT /opt/pyenv
-ARG PYTHON_VERSION 3.7.14
+ENV PYTHON_VERSION 3.7.14
 # Python 3.7
 # PyTorch 1.13
 # CUDA 11.7
