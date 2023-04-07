@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/bin/bash -e
 
 apt install -y --no-install-recommends ca-certificates git curl \
   build-essential libssl-dev zlib1g-dev \

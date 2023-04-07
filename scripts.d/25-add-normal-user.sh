@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/bin/bash -e
 
 NEW_USERNAME=${NEW_USERNAME:-torch}
 

@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/bin/bash -e
 
 TORCH_VERSION=1.13.1
 

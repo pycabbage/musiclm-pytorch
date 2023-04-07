@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/bin/bash -e
 
 PYTHON_VERSION=${PYTHON_VERSION:-3.6.15}
 

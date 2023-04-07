@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/bin/bash -e
 
 PYENV_ROOT=${PYENV_ROOT:-/opt/pyenv}
 PYENV_ROOT_TMP=/tmp/pyenv
