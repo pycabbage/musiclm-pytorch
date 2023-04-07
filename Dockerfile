@@ -37,4 +37,6 @@ RUN --mount=source=scripts.d/50-install-pytorch.sh,target=/src/scripts.d/50-inst
 
 COPY . /src
 
+RUN /src/scripts.d/60-cleanup.sh
+
 ENTRYPOINT [ "/opt/with-pyenv.sh" ]

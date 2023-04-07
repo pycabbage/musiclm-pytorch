@@ -16,8 +16,6 @@ curl -kLo /etc/apt/preferences.d/cuda-repository-pin-600 https://developer.downl
   apt-get install -y --no-install-recommends ./cuda-repo.deb
 )
 
-ls -l /tmp/
-
 cp /var/cuda-repo-ubuntu2204-11-7-local/cuda-*-keyring.gpg /usr/share/keyrings/
 apt-get -y update
 apt-get -y install -qq --no-install-recommends cuda
