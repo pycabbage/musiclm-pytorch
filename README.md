@@ -1,5 +1,6 @@
 <img src="./musiclm.png" width="450px"></img>
-
+  
+[![Test building container](https://github.com/pycabbage/musiclm-pytorch/actions/workflows/build-container.yml/badge.svg)](https://github.com/pycabbage/musiclm-pytorch/actions/workflows/build-container.yml)
 ## MusicLM - Pytorch
 
 Implementation of <a href="https://google-research.github.io/seanet/musiclm/examples/">MusicLM</a>, Google's new SOTA model for music generation using attention networks, in Pytorch.
