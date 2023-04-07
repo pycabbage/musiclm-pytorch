@@ -33,11 +33,14 @@ RUN --mount=source=scripts.d/40-install-python.sh,target=/src/scripts.d/40-insta
 
 RUN --mount=source=scripts.d/50-install-pytorch.sh,target=/src/scripts.d/50-install-pytorch.sh \
   --mount=source=setup.py,target=/src/setup.py \
+  --mount=source=LICENSE,target=/src/LICENSE \
   --mount=source=musiclm_pytorch/,target=/src/musiclm_pytorch/ \
   cd /src/ && /src/scripts.d/50-install-pytorch.sh
 
+RUN --mount=source=scripts.d/60-cleanup.sh,target=/src/scripts.d/60-cleanup.sh \
+  /src/scripts.d/60-cleanup.sh
+
 COPY . /src
 
-RUN /src/scripts.d/60-cleanup.sh
-
 ENTRYPOINT [ "/opt/with-pyenv.sh" ]
+CMD [ "/bin/bash" ]

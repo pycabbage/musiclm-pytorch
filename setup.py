@@ -26,8 +26,8 @@ setup(
     'lion-pytorch',
     'vector-quantize-pytorch>=1.0.0',
     'x-clip',
-    'torch>=1.12',
-    'torchaudio'
+    'torch==1.13.1+cu117',
+    'torchaudio==0.13.1+cu117'
   ],
   classifiers=[
     'Development Status :: 4 - Beta',
