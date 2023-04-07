@@ -21,7 +21,8 @@ RUN --mount=source=scripts.d/25-add-normal-user.sh,target=/src/scripts.d/25-add-
 
 USER ${NEW_USERNAME}
 
-RUN /src/scripts.d/30-install-pyenv.sh
+RUN --mount=source=scripts.d/30-install-pyenv.sh,target=/src/scripts.d/30-install-pyenv.sh \
+  /src/scripts.d/30-install-pyenv.sh
 
 COPY ./scripts/with-pyenv.sh /opt/with-pyenv.sh
 
