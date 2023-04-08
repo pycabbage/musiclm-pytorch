@@ -1,0 +1,19 @@
+[[source]]
+url = "https://pypi.org/simple"
+verify_ssl = true
+name = "pypi"
+
+[[source]]
+url = "https://download.pytorch.org/whl/cu117"
+verify_ssl = true
+name = "pytorch"
+
+[packages]
+torch = { version = "==1.13.1+cu117", index="pytorch" }
+torchaudio = { version = "==0.13.1+cu117", index="pytorch" }
+musiclm-pytorch = {path = "."}
+
+[dev-packages]
+
+[requires]
+python_version = "3.7"

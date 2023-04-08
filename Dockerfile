@@ -7,42 +7,44 @@ ENV PYTHON_VERSION 3.7.14
 # PyTorch 1.13
 # CUDA 11.7
 
+ARG MT_PATH /src
+
 USER root
 
-RUN --mount=source=scripts.d/00-unminimize.sh,target=/src/scripts.d/00-unminimize.sh \
-  /src/scripts.d/00-unminimize.sh
-RUN --mount=source=scripts.d/10-install-depends.sh,target=/src/scripts.d/10-install-depends.sh \
-  /src/scripts.d/10-install-depends.sh
-RUN --mount=source=scripts.d/20-install-cuda.sh,target=/src/scripts.d/20-install-cuda.sh \
+RUN --mount=source=scripts.d/00-unminimize.sh,target=${MT_PATH}/scripts.d/00-unminimize.sh \
+  ${MT_PATH}/scripts.d/00-unminimize.sh
+RUN --mount=source=scripts.d/10-install-depends.sh,target=${MT_PATH}/scripts.d/10-install-depends.sh \
+  ${MT_PATH}/scripts.d/10-install-depends.sh
+RUN --mount=source=scripts.d/20-install-cuda.sh,target=${MT_PATH}/scripts.d/20-install-cuda.sh \
   --mount=type=cache,target=/tmp/cudacache \
-  mkdir /tmp/cudacache -p && /src/scripts.d/20-install-cuda.sh
-RUN --mount=source=scripts.d/25-add-normal-user.sh,target=/src/scripts.d/25-add-normal-user.sh \
-  /src/scripts.d/25-add-normal-user.sh
+  mkdir /tmp/cudacache -p && ${MT_PATH}/scripts.d/20-install-cuda.sh
+RUN --mount=source=scripts.d/25-add-normal-user.sh,target=${MT_PATH}/scripts.d/25-add-normal-user.sh \
+  ${MT_PATH}/scripts.d/25-add-normal-user.sh
 
 USER ${NEW_USERNAME}
 
-RUN --mount=source=scripts.d/30-install-pyenv.sh,target=/src/scripts.d/30-install-pyenv.sh \
-  /src/scripts.d/30-install-pyenv.sh
+RUN --mount=source=scripts.d/30-install-pyenv.sh,target=${MT_PATH}/scripts.d/30-install-pyenv.sh \
+  ${MT_PATH}/scripts.d/30-install-pyenv.sh
 
 COPY ./scripts/with-pyenv.sh /opt/with-pyenv.sh
 
 SHELL [ "/opt/with-pyenv.sh" ]
 
-RUN --mount=source=scripts.d/40-install-python.sh,target=/src/scripts.d/40-install-python.sh \
-  /src/scripts.d/40-install-python.sh
+RUN --mount=source=scripts.d/40-install-python.sh,target=${MT_PATH}/scripts.d/40-install-python.sh \
+  ${MT_PATH}/scripts.d/40-install-python.sh
 
-COPY --chown=${NEW_USERNAME}:${NEW_USERNAME} . /src
+COPY --chown=${NEW_USERNAME}:${NEW_USERNAME} . ${MT_PATH}
 
-RUN --mount=source=scripts.d/50-install-pytorch.sh,target=/src/scripts.d/50-install-pytorch.sh \
-  --mount=source=setup.py,target=/src/setup.py \
-  --mount=source=LICENSE,target=/src/LICENSE \
-  --mount=source=musiclm_pytorch/,target=/src/musiclm_pytorch/ \
-  cd /src/ && /src/scripts.d/50-install-pytorch.sh
+RUN --mount=source=scripts.d/50-install-pytorch.sh,target=${MT_PATH}/scripts.d/50-install-pytorch.sh \
+  --mount=source=setup.py,target=${MT_PATH}/setup.py \
+  --mount=source=LICENSE,target=${MT_PATH}/LICENSE \
+  --mount=source=musiclm_pytorch/,target=${MT_PATH}/musiclm_pytorch/ \
+  cd ${MT_PATH}/ && ${MT_PATH}/scripts.d/50-install-pytorch.sh
 
-RUN --mount=source=scripts.d/60-cleanup.sh,target=/src/scripts.d/60-cleanup.sh \
-  /src/scripts.d/60-cleanup.sh
+RUN --mount=source=scripts.d/60-cleanup.sh,target=${MT_PATH}/scripts.d/60-cleanup.sh \
+  ${MT_PATH}/scripts.d/60-cleanup.sh
 
-COPY . /src
+COPY . ${MT_PATH}
 
 ENTRYPOINT [ "/opt/with-pyenv.sh" ]
 CMD [ "/bin/bash" ]

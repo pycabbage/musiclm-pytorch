@@ -18,17 +18,7 @@ setup(
     'text to music',
     'contrastive learning'
   ],
-  install_requires=[
-    'accelerate',
-    'audiolm-pytorch>=0.17.0',
-    'beartype',
-    'einops>=0.6',
-    'lion-pytorch',
-    'vector-quantize-pytorch>=1.0.0',
-    'x-clip',
-    'torch==1.13.1+cu117',
-    'torchaudio==0.13.1+cu117'
-  ],
+  install_requires=open('requirements.txt').read().splitlines(),
   classifiers=[
     'Development Status :: 4 - Beta',
     'Intended Audience :: Developers',
