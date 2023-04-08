@@ -20,35 +20,41 @@ jobs:
   pipenv-lock:
     name: Update Pipfile.lock
     runs-on: ubuntu-latest
+    permissions:
+      contents: write
     steps:
     - uses: actions/checkout@v2
     - uses: actions/setup-python@v4
       with:
         python-version-file: .python-version
-    - name: Check for changes
+    - name: Check for changes in Pipfile
       id: check_changes
       run: |
         git fetch --no-tags --depth=1 origin +refs/heads/main
-        CHANGES=$(git diff --name-only HEAD..FETCH_HEAD -- Pipfile)
-        echo changes_found=$([[ -z $CHANGES ]] && echo false || echo true) >> $GITHUB_OUTPUT
+        CHANGES_PIPFILE=$(git diff --name-only HEAD..FETCH_HEAD -- Pipfile)
+        CHANGES_LOCKFILE=$(git diff --name-only HEAD..FETCH_HEAD -- Pipfile.lock)
+        echo changes_found=$([[ -z $CHANGES_PIPFILE ]] && echo false || echo true) >> $GITHUB_OUTPUT
     - name: Update Pipfile.lock
       if: ${{ steps.check_changes.outputs.changes_found == 'true' }}
       run: |
         pip3 install pipenv
         pipenv lock
+        pipenv install --system
+    - name: Upload Pipfile.lock
+      uses: actions/upload-artifact@v2
+      with:
+        name: pipfile
+        path: |
+          Pipfile
+          Pipfile.lock
     - name: Commit changes
       if: ${{ steps.check_changes.outputs.changes_found == 'true' }}
       run: |
         git config --local user.name "github-actions[bot]"
         git config --local user.email "41898282+github-actions[bot]@users.noreply.github.com"
-        git add Pipfile.lock
-        git commit -m "Update Pipfile.lock"
+        git add Pipfile Pipfile.lock
+        git commit -m "Update Pipfile or Pipfile.lock"
         git push
-    - name: Upload Pipfile.lock
-      uses: actions/upload-artifact@v2
-      with:
-        name: pipenv-lock
-        path: Pipfile.lock
 
   build:
     name: Build and push container
@@ -58,7 +64,7 @@ jobs:
     - uses: actions/checkout@v2
     - uses: actions/download-artifact@v2
       with:
-        name: pipenv-lock
+        name: pipfile
         path: .
     - uses: docker/setup-qemu-action@v2
     - uses: docker/setup-buildx-action@v2
