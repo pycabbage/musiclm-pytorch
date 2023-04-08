@@ -11,7 +11,7 @@ name = "pytorch"
 [packages]
 torch = { version = "==1.13.1+cu117", index="pytorch" }
 torchaudio = { version = "==0.13.1+cu117", index="pytorch" }
-musiclm-pytorch = {path = "."}
+musiclm-pytorch = { path = "." }
 
 [dev-packages]
 
