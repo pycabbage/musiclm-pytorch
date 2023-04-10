@@ -2,7 +2,7 @@
 
 FROM mcr.microsoft.com/devcontainers/base:jammy
 ARG USERNAME=musiclm
-ARG USER_UID=1000
+ARG USER_UID=2000
 ARG USER_GID=$USER_UID
 
 ENV SCRIPTS_BASE=/opt/scripts.d
