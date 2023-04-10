@@ -5,7 +5,7 @@ on:
     branches: [ "template" ]
   pull_request:
     branches: [ "template" ]
-  dispatch_workflow:
+  workflow_dispatch:
 
 jobs:
   build:
